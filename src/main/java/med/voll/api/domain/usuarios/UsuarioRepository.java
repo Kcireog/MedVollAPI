@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    //busca un objeto del tipo UserDetails, interface implementada por Usuario
     UserDetails findByLogin(String username);
 }
