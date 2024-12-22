@@ -32,8 +32,8 @@ public class AutenticacionController {
 
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
         var JWTtoken = tokenService.generateToken((Usuario) usuarioAutenticado.getPrincipal());
-//        El método build() no es necesario porque el
-//        método ok() ya devuelve una instancia de ResponseEntity
+//        El metodo build() no es necesario porque el
+//        metdo ok() ya devuelve una instancia de ResponseEntity
 //        con el cuerpo establecido como JWTtoken.
         return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
     }
