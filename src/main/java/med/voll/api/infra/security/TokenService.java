@@ -37,6 +37,9 @@ public class TokenService {
     }
 
     public String getSubject(String token) {
+        if(token == null){
+            throw new RuntimeException();
+        }
         DecodedJWT verifier = null;
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret); //validando la firma
@@ -54,6 +57,7 @@ public class TokenService {
         return verifier.getSubject();
     }
 
+    //desactivar para generar un token sin expiración y poder hacer pruebas
     private Instant generarFechaExpiracion() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }

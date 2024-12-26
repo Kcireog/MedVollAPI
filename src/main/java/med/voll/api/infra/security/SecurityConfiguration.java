@@ -1,5 +1,6 @@
 package med.voll.api.infra.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,26 +12,31 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+//    @Autowired
+//    private SecurityFilter securityFilter;
 
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        return http.csrf(c -> c.disable())
 //                .cors(c -> c.disable())
 //                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                //codigo para permitir las 2 request especificadas, sin autenticación
+//                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll()
+//                        .anyRequest().authenticated())
+//                .build();
+
+    //codigo para permitir las 2 request especificadas, sin autenticación
 //                .authorizeHttpRequests(auth -> {
 //                    auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
-//                    auth.requestMatchers(HttpMethod.GET, "/medicos").permitAll(); // Permitir GET en /medicos
+////                    auth.requestMatchers(HttpMethod.GET, "/medicos").permitAll(); // Permitir GET en /medicos
 //                    auth.anyRequest().authenticated();
 //                })
 //                .build();
-////                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll()
-////                        .anyRequest().authenticated())
-////                .build();
 //    }
 
     //metodo mas abierto/flexible, para desarrollo o pruebas:
@@ -38,10 +44,30 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(c -> c.disable())
                 .cors(c -> c.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Permitir todas las solicitudes
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//indicamos a spring el tipo de sesion
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
+                    auth.anyRequest().authenticated();
+                })
                 .build();
+
+
     }
+//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Permitir todas las solicitudes
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
