@@ -18,26 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-//    @Autowired
-//    private SecurityFilter securityFilter;
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf(c -> c.disable())
-//                .cors(c -> c.disable())
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll()
-//                        .anyRequest().authenticated())
-//                .build();
-
-    //codigo para permitir las 2 request especificadas, sin autenticación
-//                .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
-////                    auth.requestMatchers(HttpMethod.GET, "/medicos").permitAll(); // Permitir GET en /medicos
-//                    auth.anyRequest().authenticated();
-//                })
-//                .build();
-//    }
+    @Autowired
+    private SecurityFilter securityFilter;
 
     //metodo mas abierto/flexible, para desarrollo o pruebas:
     @Bean
@@ -47,13 +29,13 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))//indicamos a spring el tipo de sesion
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
+//                    auth.requestMatchers(HttpMethod.DELETE, "/medicos").hasRole("ADMIN");
+//                    auth.requestMatchers(HttpMethod.POST, "/login").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 })
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)// que se llame primero nuestro filtro, antes que el de Spring
                 .build();
-
-
     }
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Permitir todas las solicitudes
 
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
