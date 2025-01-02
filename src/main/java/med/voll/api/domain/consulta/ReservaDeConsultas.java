@@ -27,13 +27,32 @@ public class ReservaDeConsultas {
         }
         var medico = elegirMedico(datos);
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();//el get para evitar obtener un Optional
-        var consulta = new Consulta(null, medico, paciente, datos.fecha());
+        var consulta = new Consulta(null, medico, paciente, datos.fecha(),null);
 
         consultaRepository.save(consulta);
     }
 
-    private Medico elegirMedico(DatosReservaConsulta datos) {
+    public void cancelar (DatosCancelamientoConsulta datos) {
 
+        if (!consultaRepository.existsById(datos.idConsulta())) {
+            throw new ValidacionException("No existe un consulta con el id informado...");
+        }
+        var consulta = consultaRepository.getReferenceById(datos.idConsulta());
 
     }
+
+    private Medico elegirMedico(DatosReservaConsulta datos) {
+
+        if(datos.idMedico()!= null){
+            return medicoRepository.getReferenceById(datos.idMedico());// el reference devuelve el objeto en si
+        }
+        if(datos.especialidad()== null){
+            throw  new ValidacionException("Es necesario elegir una especialidad, cuando no se elige un medico");
+        }
+
+        return medicoRepository.elegirMedicoAleatorioDisponibleEnLafecha(datos.especialidad(),datos.fecha());
+
+    }
+
+
 }
