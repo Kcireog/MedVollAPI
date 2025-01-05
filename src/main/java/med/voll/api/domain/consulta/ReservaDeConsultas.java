@@ -25,6 +25,9 @@ public class ReservaDeConsultas {
         if(datos.idMedico()!= null && !medicoRepository.existsById(datos.idMedico())){
             throw new ValidacionException("No existe un medico con el id informado...");
         }
+
+        //validaciones
+
         var medico = elegirMedico(datos);
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();//el get para evitar obtener un Optional
         var consulta = new Consulta(null, medico, paciente, datos.fecha(),null);

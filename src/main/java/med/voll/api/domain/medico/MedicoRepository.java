@@ -28,5 +28,14 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
             limit 1
             """, nativeQuery = true)
 //para que acepte el 1 en activo where m.activo = true, en caso de que no tenga native
+    //el rand para la aleatoriedad
     Medico elegirMedicoAleatorioDisponibleEnLafecha(Especialidad especialidad, @NotNull @Future LocalDateTime fecha);
+
+    @Query("""
+                    select m.activo
+                    from Medico m
+                    where
+                    m.id = :idMedico
+            """)
+    boolean findActivoById(Long idMedico);
 }
