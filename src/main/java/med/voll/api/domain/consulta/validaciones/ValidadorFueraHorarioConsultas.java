@@ -2,10 +2,12 @@ package med.voll.api.domain.consulta.validaciones;
 
 import med.voll.api.domain.ValidacionException;
 import med.voll.api.domain.consulta.DatosReservaConsulta;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 
-public class ValidacionFueraHorarioConsultas {
+@Component
+public class ValidadorFueraHorarioConsultas implements ValidadorDeConsultas {
     public void validar(DatosReservaConsulta datos){
         /*
         El horario de atención de la clinica es de l-s de 7 a 19 hrs

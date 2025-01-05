@@ -3,8 +3,11 @@ package med.voll.api.domain.consulta.validaciones;
 import med.voll.api.domain.ValidacionException;
 import med.voll.api.domain.consulta.DatosReservaConsulta;
 import med.voll.api.domain.medico.MedicoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ValidadorMedicoActivo {
+@Component
+public class ValidadorMedicoActivo implements ValidadorDeConsultas{
     /*
     no se utiliza @Autowired directamente en la declaración del atributo
     del repositorio. Esto se debe a que estas clases de validación,
@@ -18,6 +21,7 @@ public class ValidadorMedicoActivo {
     Spring no sabría dónde inyectar la dependencia.
      */
 
+    @Autowired //como ya se reconoce la clase, podemos inyectar
     private MedicoRepository repository;
 
     public void validar(DatosReservaConsulta datos) {
