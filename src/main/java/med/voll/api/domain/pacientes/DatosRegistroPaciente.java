@@ -1,5 +1,6 @@
 package med.voll.api.domain.pacientes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ public record DatosRegistroPaciente(
         String email,
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
+        @JsonProperty("documento") //para que reciba correntamente el body del post
         String documentoIdentidad,
 
         @NotBlank

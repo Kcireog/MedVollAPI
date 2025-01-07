@@ -13,6 +13,6 @@ public record DatosReservaConsulta(
         @NotNull
         @Future //no puede ser una fecha anterior a la actual
         LocalDateTime fecha,
-        Especialidad especialidad
+        Especialidad especialidad //esta se dara en caso de no saber con que medico quiere la cita
 ) {
 }

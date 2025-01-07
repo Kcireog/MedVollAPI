@@ -24,7 +24,7 @@ public class ReservaDeConsultas {
     private List<ValidadorDeConsultas> validadores; //reconoce que es una interfaz y buscara todas las clases
     //                                                que la implementen(Los validadores)
 
-    public void reservar(DatosReservaConsulta datos) {
+    public DatosDetalleConsulta reservar(DatosReservaConsulta datos) {
 
         if (!pacienteRepository.existsById(datos.idPaciente())) {
             throw new ValidacionException("No existe un paciente con el id informado...");
@@ -37,10 +37,17 @@ public class ReservaDeConsultas {
         validadores.forEach(v -> v.validar(datos)); //ejecutara el metodo validar de cada una de los validadores
 
         var medico = elegirMedico(datos);
+        if (medico == null) {
+            throw new ValidacionException("No existe un medico disponible en ese horario");
+        }
+
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();//el get para evitar obtener un Optional
         var consulta = new Consulta(null, medico, paciente, datos.fecha(), null);
 
         consultaRepository.save(consulta);
+        //     llamada al constructor
+        return new DatosDetalleConsulta(consulta); //creamos un DatosDetalleConsulta,
+        //                                           para devolver a la respuesta de la request reservar en controller
     }
 
     public void cancelar(DatosCancelamientoConsulta datos) {

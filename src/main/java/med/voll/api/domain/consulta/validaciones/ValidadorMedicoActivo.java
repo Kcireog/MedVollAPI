@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidadorMedicoActivo implements ValidadorDeConsultas{
+public class ValidadorMedicoActivo implements ValidadorDeConsultas {
     /*
     no se utiliza @Autowired directamente en la declaración del atributo
     del repositorio. Esto se debe a que estas clases de validación,
@@ -26,7 +26,7 @@ public class ValidadorMedicoActivo implements ValidadorDeConsultas{
 
     public void validar(DatosReservaConsulta datos) {
         //elección del medíco opcional
-        if(datos.idPaciente() == null){
+        if (datos.idMedico() == null) {
             return;
         }
         var medicoEstaActivo = repository.findActivoById(datos.idMedico());
