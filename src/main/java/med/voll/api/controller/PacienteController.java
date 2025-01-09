@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.pacientes.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 //no se utiliza la barra (/) al inicio del path. Aunque esto no genera
 //un error, Spring automáticamente lo interpreta como relativo, lo que
 //significa que internamente se ajusta a /pacientes.
+@SecurityRequirement(name = "bearer-key")
 public class PacienteController {
 
     @Autowired

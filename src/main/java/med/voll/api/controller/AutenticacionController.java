@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
+//no necesita autenticación porque sirve para eso mismo(autenticarse)
 public class AutenticacionController {
 
     @Autowired
