@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
-
+    //Query Method, funcionalidad de Spring Data JPA
     Page<Paciente> findAllByActivoTrue(Pageable paginacion);
 
 

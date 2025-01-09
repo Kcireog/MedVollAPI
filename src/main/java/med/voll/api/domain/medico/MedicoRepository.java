@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
-
+    //Query Method, funcionalidad de Spring Data JPA
     Page<Medico> findByActivoTrue(Pageable paginacion);
 
     @Query("""
